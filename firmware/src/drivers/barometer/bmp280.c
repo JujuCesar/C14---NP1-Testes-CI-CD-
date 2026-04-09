@@ -7,9 +7,21 @@ void bmp280_init() {
 }
 
 float bmp280_read_temperature() {
-    return Adafruit_BMP280_readTemperature(&bmp);
+    float temp = Adafruit_BMP280_readTemperature(&bmp);
+
+    if (temp > 85.0f || temp < -40.0f) {
+        return -999.0f;
+    }
+
+    return temp;
 }
 
 float bmp280_read_pressure() {
-    return Adafruit_BMP280_readPressure(&bmp);
+    float press = Adafruit_BMP280_readPressure(&bmp);
+
+    if (press < 300.0f || press > 1100.0f) {
+        return -1.0f;
+    }
+
+    return press;
 }
