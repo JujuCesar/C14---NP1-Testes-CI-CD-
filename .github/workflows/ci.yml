@@ -68,4 +68,4 @@ jobs:
 
     steps:
       - name: Deploy simulado
-        run: echo "Deploy realizado com sucesso!"
+        run: echo "Deploy realizado com sucesso!" 
