@@ -1,0 +1,71 @@
+name: CI - WanderLust Firmware
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+
+  # 🔹 JOB 1 — Build
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Instalar dependências
+        run: |
+          sudo apt update
+          sudo apt install -y build-essential gcc
+
+      - name: Build do projeto (simulado)
+        run: |
+          echo "Build realizado com sucesso!" > build.txt
+
+      - name: Salvar artifact do build
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifact
+          path: build.txt
+
+  # 🔹 JOB 2 — Testes (em paralelo com build)
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Instalar Ruby (Ceedling depende disso)
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.1'
+
+      - name: Instalar Ceedling
+        run: gem install ceedling
+
+      - name: Instalar GCC
+        run: sudo apt install -y gcc
+
+      - name: Rodar testes
+        run: |
+          cd firmware/test/tests
+          ceedling test:all | tee test_results.txt
+
+      - name: Salvar relatório de testes
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-report
+          path: firmware/test/tests/test_results.txt
+
+  # 🔹 JOB 3 — Deploy (Só roda se os outros dois passaram)
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [build, test]
+
+    steps:
+      - name: Deploy simulado
+        run: echo "Deploy realizado com sucesso!"
