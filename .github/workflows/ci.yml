@@ -69,3 +69,29 @@ jobs:
     steps:
       - name: Deploy simulado
         run: echo "Deploy realizado com sucesso!" 
+
+
+# Notificação via e-mail
+  notify:
+    runs-on: ubuntu-latest
+    needs: [build, test, deploy]
+
+    steps:
+      - name: Enviar e-mail
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.EMAIL_FROM }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: "Pipeline CI/CD - WanderLust"
+          body: |
+            Pipeline finalizado com sucesso!
+
+            ✔ Build OK
+            ✔ Testes OK
+            ✔ Deploy OK
+
+            Verifique no GitHub Actions para mais detalhes.
+          to: ${{ secrets.EMAIL_TO }}
+          from: ${{ secrets.EMAIL_FROM }}
