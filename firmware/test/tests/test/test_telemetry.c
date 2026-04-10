@@ -9,6 +9,10 @@ void tearDown(void) {
     // Executa depois de cada teste 
 }
 
+// ========================
+// TESTES
+// ========================
+
 void test_telemetry_init_should_zero_values(void) {
     telemetry_t t;
 
@@ -55,3 +59,22 @@ void test_telemetry_should_reset_values_after_init(void) {
     TEST_ASSERT_EQUAL_FLOAT(0.0f, t.temperature);
 }
 
+void test_telemetry_should_handle_zero_values(void) {
+    telemetry_t t;
+
+    t.temperature = 0.0f;
+    t.pressure = 0.0f;
+
+    TEST_ASSERT_EQUAL_FLOAT(0.0f, t.temperature);
+    TEST_ASSERT_EQUAL_FLOAT(0.0f, t.pressure);
+}
+
+void test_telemetry_should_not_corrupt_memory(void) {
+    telemetry_t t;
+
+    telemetry_init(&t);
+
+    t.temperature = 10.0f;
+
+    TEST_ASSERT_NOT_EQUAL(0.0f, t.temperature);
+}

@@ -5,6 +5,10 @@
 float mock_temperature = 25.0f;
 float mock_pressure = 1000.0f;
 
+// ========================
+// TESTES
+// ========================
+
 void test_bmp280_init_should_not_crash(void) {
     bmp280_init();
     TEST_PASS();
