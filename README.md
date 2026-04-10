@@ -149,58 +149,57 @@ As soluções propostas foram validadas na prática e integradas ao projeto com 
 
 A utilização da IA contribuiu significativamente para a produtividade e qualidade do desenvolvimento.
 
+## 📁 Estrutura do Projeto
 
-
-Estrutura do projeto WanderLust:
-
+```bash
 WanderLust/
 │
-├── firmware/
+├── firmware/                  # Código principal do firmware embarcado
 │   │
-│   ├── include/
+│   ├── include/               # Arquivos de cabeçalho globais
 │   │   └── README
 │   │
-│   ├── services/
-│   │   ├── telemetry.c
+│   ├── services/              # Camada de serviços (lógica de aplicação)
+│   │   ├── telemetry.c        # Manipulação de dados de telemetria
 │   │   └── telemetry.h
 │   │
-│   ├── src/
-│   │   ├── main.cpp
+│   ├── src/                   # Código fonte principal
+│   │   ├── main.cpp           # Ponto de entrada do firmware
 │   │   │
-│   │   └── drivers/
+│   │   └── drivers/           # Drivers de hardware
 │   │       ├── barometer/
-│   │       │   ├── bmp280.c
+│   │       │   ├── bmp280.c   # Driver do sensor BMP280
 │   │       │   └── bmp280.h
 │   │       │
 │   │       ├── imu/
-│   │       │   ├── mpu6050.c
+│   │       │   ├── mpu6050.c  # Driver do sensor MPU6050
 │   │       │   └── mpu6050.h
 │   │       │
 │   │       └── lora/
-│   │           ├── rfm95.c
+│   │           ├── rfm95.c    # Comunicação LoRa (RFM95)
 │   │           └── rfm95.h
 │   │
-│   └── test/
+│   └── test/                  # Ambiente de testes unitários (Ceedling)
 │       └── tests/
-│           ├── project.yml
+│           ├── project.yml    # Configuração do Ceedling
 │           │
 │           ├── src/
-│           │   └── unity_config.h
+│           │   └── unity_config.h  # Configuração do framework Unity
 │           │
 │           └── test/
-│               ├── support/ (CMock's)
+│               ├── support/        # Mocks para simulação de hardware
 │               │   ├── Adafruit_BMP280.h
 │               │   ├── SPI.h
 │               │   └── LoRa.h
 │               │
-│               ├── test_telemetry.c
-│               ├── test_bmp280.c
-│               └── test_lora.c
+│               ├── test_telemetry.c  # Testes do módulo de telemetria
+│               ├── test_bmp280.c     # Testes do sensor BMP280
+│               └── test_lora.c       # Testes do módulo LoRa
 │
 ├── .github/
 │   └── workflows/
-│       └── ci.yml
+│       └── ci.yml              # Pipeline CI/CD (GitHub Actions)
 │
-├── platformio.ini
-├── .gitignore
-└── README.md
+├── platformio.ini              # Configuração do PlatformIO
+├── .gitignore                  # Arquivos ignorados pelo Git
+└── README.md                   # Documentação do projeto
